@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index(): View
     {
-        return view('home');
+        return view('User.home');
     } 
   
     /**
@@ -34,16 +34,6 @@ class HomeController extends Controller
      */
     public function adminHome(): View
     {
-        return view('adminHome');
-    }
-  
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function pustakawanHome(): View
-    {
-        return view('pustakawanHome');
+        return view('Admin.adminHome');
     }
 }

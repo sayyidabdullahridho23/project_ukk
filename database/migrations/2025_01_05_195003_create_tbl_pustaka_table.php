@@ -35,6 +35,7 @@ return new class extends Migration
             $table->foreign('id_format')->references('id_format')->on('tbl_format');
             $table->foreign('id_penerbit')->references('id_penerbit')->on('tbl_penerbit');
             $table->foreign('id_pengarang')->references('id_pengarang')->on('tbl_pengarang');
+            $table->timestamps();
         });
     }
 

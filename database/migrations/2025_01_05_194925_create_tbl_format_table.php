@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode_format', 10)->unique();
             $table->string('format', 25)->unique();
             $table->string('keterangan', 50)->nullable();
+            $table->timestamps();
         });
     }
 

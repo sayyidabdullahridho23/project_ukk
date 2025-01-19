@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('username', 50)->unique();
             $table->string('password', 50);
             $table->foreign('id_jenis_anggota')->references('id_jenis_anggota')->on('tbl_jenis_anggota');
+            $table->timestamps();
         });
     }
 

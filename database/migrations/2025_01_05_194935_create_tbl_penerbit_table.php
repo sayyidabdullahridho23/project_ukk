@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('fax', 15)->nullable();
             $table->string('website', 50)->nullable();
             $table->string('kontak', 50);
+            $table->timestamps();
         });
     }
 

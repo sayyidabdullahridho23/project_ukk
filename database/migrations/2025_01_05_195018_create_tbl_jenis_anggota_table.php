@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('jenis_anggota', 15);
             $table->string('max_pinjam', 5);
             $table->string('keterangan', 50)->nullable();
+            $table->timestamps();
         });
     }
 

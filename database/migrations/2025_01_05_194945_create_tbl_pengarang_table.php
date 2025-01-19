@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('website', 50)->nullable();
             $table->text('biografi')->nullable();
             $table->string('keterangan', 50)->nullable();
+            $table->timestamps();
         });
     }
 

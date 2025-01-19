@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('ddc', 100)->unique();
             $table->string('keterangan', 100)->nullable();
             $table->foreign('id_rak')->references('id_rak')->on('tbl_rak');
+            $table->timestamps();
         });
     }
 

@@ -3,64 +3,147 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>{{ config('app.name', 'FutureSight') }}</title>
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ asset('css/profile-css.css')}}">
+    
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body>
+
+<style>
+    /* Profile CSS */
+
+.profile-section {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s;
+}
+
+.profile-section:hover {
+    transform: translateY(-2px);
+}
+
+.section-header {
+    border-bottom: 2px solid #f3f4f6;
+    padding: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.avatar-upload {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.current-avatar {
+    border-radius: 50%;
+    border: 3px solid #e5e7eb;
+    transition: border-color 0.2s;
+}
+
+.current-avatar:hover {
+    border-color: #3b82f6;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.back-button:hover {
+    opacity: 0.9;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.nav-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.btn-custom {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+}
+
+.btn-custom:hover {
+    background-color: #2563eb;
+}
+</style>
+
+<body class="bg-gray-100">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <!-- Enhanced Navbar -->
+        <nav class="navbar navbar-expand-md navbar-light bg-primary shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="back-button" href="{{ route('admin.home') }}">
+                    <box-icon name='chevron-left' color="white"></box-icon>
+                    <span>Back to Dashboard</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
-
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white nav-profile" href="#" role="button" data-bs-toggle="dropdown">
+                                    @if(Auth::user()->avatar)
+                                        <img class="nav-avatar" src="/avatars/{{ Auth::user()->avatar }}" alt="Profile">
+                                    @else
+                                        <img class="nav-avatar" src="{{ asset('/img/default_profile.png') }}" alt="Default Profile">
+                                    @endif
+                                    <span>{{ Auth::user()->name }}</span>
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" 
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -72,8 +155,11 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
+        <!-- Main Content -->
+        <main>
+            <div class="profile-container">
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>

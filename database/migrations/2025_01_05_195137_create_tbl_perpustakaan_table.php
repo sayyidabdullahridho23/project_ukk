@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('website', 50)->nullable();
             $table->string('no_telp', 15);
             $table->string('keterangan', 50)->nullable();
+            $table->timestamps();
         });
     }
 
