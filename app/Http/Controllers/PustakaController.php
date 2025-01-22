@@ -31,8 +31,8 @@ class PustakaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_ddc' => 'required',
-            'id_format' => 'required',
+            'id_ddc' => 'required|exists:tbl_ddc,id_ddc',
+            'id_format' => 'required|exists:tbl_format,id_format',
             'id_penerbit' => 'required',
             'id_pengarang' => 'required',
             'isbn' => 'required|string|max:20',
@@ -46,8 +46,8 @@ class PustakaController extends Controller
 
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
-            $path = $gambar->store('public/pustaka');
-            $gambarPath = str_replace('public/', '', $path);
+            $gambarPath = $gambar->storeAs('pustaka', $gambar->hashName(), 'public');
+            $gambarPath = basename($gambarPath);
         }
 
         Pustaka::create([
@@ -107,13 +107,12 @@ class PustakaController extends Controller
         if ($request->hasFile('gambar')) {
             // Hapus gambar lama jika ada
             if ($pustaka->gambar) {
-                Storage::delete('public/' . $pustaka->gambar);
+                Storage::disk('public')->delete($pustaka->gambar);
             }
             
             // Upload gambar baru
             $gambar = $request->file('gambar');
-            $path = $gambar->store('public/pustaka');
-            $gambarPath = str_replace('public/', '', $path);
+            $gambarPath = $gambar->store('pustaka', 'public');
             
             $pustaka->gambar = $gambarPath;
         }
@@ -139,5 +138,20 @@ class PustakaController extends Controller
 
         return redirect()->route('admin.pustaka.index')
             ->with('success', 'Pustaka berhasil diperbarui');
+    }
+
+    public function destroy($id)
+    {
+        $pustaka = Pustaka::findOrFail($id);
+        
+        // Hapus file gambar jika ada
+        if ($pustaka->gambar) {
+            Storage::disk('public')->delete('pustaka/' . $pustaka->gambar);
+        }
+        
+        $pustaka->delete();
+        
+        return redirect()->route('admin.pustaka.index')
+            ->with('success', 'Pustaka berhasil dihapus');
     }
 } 

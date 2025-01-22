@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Facades\File;
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -87,17 +91,41 @@
         <div class="col-12">
             <h2 class="mb-4">Buku Terbaru</h2>
         </div>
-        <div class="col-md-3">
-            <div class="card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Book Cover">
+        @forelse($latestBooks as $book)
+        <div class="col-md-2">
+            <div class="card h-100">
+                @php
+                    $storagePath = storage_path('app/public/pustaka/' . $book->gambar);
+                @endphp
+                
+                @if($book->gambar && File::exists($storagePath))
+                    <img src="{{ asset('storage/pustaka/' . $book->gambar) }}" 
+                         class="card-img-top" alt="{{ $book->judul_pustaka }}"
+                         style="height: 200px; object-fit: cover;">
+                @else
+                    <img src="{{ asset('images/no-image.png') }}" 
+                         class="card-img-top" alt="No Image"
+                         style="height: 200px; object-fit: cover;">
+                @endif
                 <div class="card-body">
-                    <h5 class="card-title">Judul Buku 1</h5>
-                    <p class="card-text">Pengarang: John Doe</p>
-                    <a href="#" class="btn btn-primary">Detail</a>
+                    <h6 class="card-title text-truncate" title="{{ $book->judul_pustaka }}">
+                        {{ $book->judul_pustaka }}
+                    </h6>
+                    <p class="card-text small text-muted mb-2">
+                        {{ $book->pengarang->nama_pengarang }}
+                    </p>
+                    <a href="{{ route('book.show', $book->id_pustaka) }}" 
+                       class="btn btn-primary btn-sm">Detail</a>
                 </div>
             </div>
         </div>
-        <!-- Repeat for other books -->
+        @empty
+        <div class="col-12">
+            <div class="alert alert-info">
+                Belum ada buku yang ditambahkan.
+            </div>
+        </div>
+        @endforelse
     </div>
 
     <!-- Announcement Section -->
@@ -131,3 +159,4 @@
     }
 </style>
 @endsection
+

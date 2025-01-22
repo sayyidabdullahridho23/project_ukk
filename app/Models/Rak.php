@@ -10,7 +10,7 @@ class Rak extends Model
     protected $primaryKey = 'id_rak';
     protected $fillable = ['kode_rak', 'rak', 'keterangan'];
 
-    public function ddcs()
+    public function ddc()
     {
         return $this->hasMany(DDC::class, 'id_rak', 'id_rak');
     }

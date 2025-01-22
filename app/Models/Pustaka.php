@@ -8,6 +8,7 @@ class Pustaka extends Model
 {
     protected $table = 'tbl_pustaka';
     protected $primaryKey = 'id_pustaka';
+    public $timestamps = true;
     
     protected $fillable = [
         'id_ddc',
@@ -32,21 +33,21 @@ class Pustaka extends Model
 
     public function ddc()
     {
-        return $this->belongsTo(DDC::class, 'id_ddc');
+        return $this->belongsTo(DDC::class, 'id_ddc', 'id_ddc');
     }
 
     public function format()
     {
-        return $this->belongsTo(Format::class, 'id_format');
+        return $this->belongsTo(Format::class, 'id_format', 'id_format');
     }
 
     public function penerbit()
     {
-        return $this->belongsTo(Penerbit::class, 'id_penerbit');
+        return $this->belongsTo(Penerbit::class, 'id_penerbit', 'id_penerbit');
     }
 
     public function pengarang()
     {
-        return $this->belongsTo(Pengarang::class, 'id_pengarang');
+        return $this->belongsTo(Pengarang::class, 'id_pengarang', 'id_pengarang');
     }
 } 

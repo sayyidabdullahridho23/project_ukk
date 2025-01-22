@@ -12,6 +12,8 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\JenisAnggotaController;
 use App\Http\Controllers\PustakaController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -29,6 +31,7 @@ All Normal Users Routes List
 Route::middleware(['auth', 'user-access:user'])->group(function () {
   
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/book/{id}', [HomeController::class, 'showBook'])->name('book.show');
     Route::get('/daftar-anggota', [AnggotaController::class, 'create'])->name('anggota.create');
     Route::post('/daftar-anggota', [AnggotaController::class, 'store'])->name('anggota.store');
 });
@@ -128,5 +131,11 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::post('/', [ProfileController::class, 'store'])->name('admin.profile.store');
     });
+});
+
+// Buat route untuk membuat symbolic link jika belum ada
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+    return 'Storage link has been created';
 });
 

@@ -10,6 +10,12 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Data Pustaka</h6>
@@ -34,14 +40,17 @@
                         @foreach($pustaka as $buku)
                         <tr>
                             <td>
-                                @if($buku->gambar)
-                                    <img src="{{ asset('storage/' . $buku->gambar) }}" 
-                                         class="img-thumbnail" style="max-height: 50px;" alt="book image">
+                                @if($buku->gambar && file_exists(public_path('pustaka/' . basename($buku->gambar))))
+                                    <img src="{{ asset('pustaka/' . basename($buku->gambar)) }}" 
+                                         class="img-thumbnail" style="max-height: 200px;" alt="{{ $buku->judul_pustaka }}"><br>
+                                @else
+                                    <img src="{{ asset('images/no-image.png') }}" 
+                                         class="img-thumbnail" style="max-height: 50px;" alt="No Image"><br>
                                 @endif
                                 {{ $buku->judul_pustaka }}
                             </td>
                             <td>{{ $buku->isbn }}</td>
-                            <td>{{ $buku->ddc->nama_ddc }}</td>
+                            <td>{{ $buku->ddc->ddc ?? 'N/A' }}</td>
                             <td>{{ $buku->penerbit->nama_penerbit }}</td>
                             <td>{{ $buku->pengarang->nama_pengarang }}</td>
                             <td>{{ $buku->kondisi_buku }}</td>

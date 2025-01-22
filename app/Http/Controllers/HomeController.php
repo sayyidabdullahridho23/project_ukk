@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Pustaka;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,12 @@ class HomeController extends Controller
      */
     public function index(): View
     {
-        return view('User.home');
+        $latestBooks = Pustaka::with(['pengarang', 'penerbit'])
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get();
+        
+        return view('User.home', compact('latestBooks'));
     } 
   
     /**
@@ -46,5 +52,13 @@ class HomeController extends Controller
         }
 
         return view('Admin.adminHome', compact('dailyRegistrations'));
+    }
+
+    public function showBook($id): View
+    {
+        $book = Pustaka::with(['ddc', 'format', 'penerbit', 'pengarang'])
+            ->findOrFail($id);
+        
+        return view('User.book-detail', compact('book'));
     }
 }
