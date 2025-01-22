@@ -8,6 +8,9 @@ use App\Http\Controllers\DDCController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\PenerbitController;
 use App\Http\Controllers\PengarangController;
+use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\JenisAnggotaController;
+use App\Http\Controllers\PustakaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,6 +29,8 @@ All Normal Users Routes List
 Route::middleware(['auth', 'user-access:user'])->group(function () {
   
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/daftar-anggota', [AnggotaController::class, 'create'])->name('anggota.create');
+    Route::post('/daftar-anggota', [AnggotaController::class, 'store'])->name('anggota.store');
 });
   
 /*------------------------------------------
@@ -91,6 +96,28 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
             'edit' => 'admin.pengarang.edit',
             'update' => 'admin.pengarang.update',
             'destroy' => 'admin.pengarang.destroy'
+        ]);
+    });
+
+    Route::prefix('admin')->group(function () {
+        Route::resource('jenis-anggota', JenisAnggotaController::class)->names([
+            'index' => 'admin.jenis-anggota.index',
+            'create' => 'admin.jenis-anggota.create',
+            'store' => 'admin.jenis-anggota.store',
+            'edit' => 'admin.jenis-anggota.edit',
+            'update' => 'admin.jenis-anggota.update',
+            'destroy' => 'admin.jenis-anggota.destroy'
+        ]);
+    });
+
+    Route::prefix('admin')->group(function () {
+        Route::resource('pustaka', PustakaController::class)->names([
+            'index' => 'admin.pustaka.index',
+            'create' => 'admin.pustaka.create',
+            'store' => 'admin.pustaka.store',
+            'edit' => 'admin.pustaka.edit',
+            'update' => 'admin.pustaka.update',
+            'destroy' => 'admin.pustaka.destroy'
         ]);
     });
 

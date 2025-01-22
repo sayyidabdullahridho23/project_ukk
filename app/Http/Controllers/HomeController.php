@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
   
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\User;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -34,6 +36,15 @@ class HomeController extends Controller
      */
     public function adminHome(): View
     {
-        return view('Admin.adminHome');
+        $dailyRegistrations = [];
+        
+        // Get registrations for last 7 days
+        for($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $count = User::whereDate('created_at', $date)->count();
+            $dailyRegistrations[] = $count;
+        }
+
+        return view('Admin.adminHome', compact('dailyRegistrations'));
     }
 }

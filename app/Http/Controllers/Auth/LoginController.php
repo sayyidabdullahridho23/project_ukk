@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use App\Models\UserLogin;
 
 class LoginController extends Controller
 {
@@ -67,5 +68,13 @@ class LoginController extends Controller
                 ->with('error','Email-Address And Password Are Wrong.');
         }
           
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        UserLogin::create([
+            'user_id' => $user->id,
+            'login_at' => now(),
+        ]);
     }
 }

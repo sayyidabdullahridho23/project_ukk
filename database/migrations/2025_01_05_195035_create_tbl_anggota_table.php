@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('keterangan', 45)->nullable();
             $table->text('foto')->nullable();
             $table->string('username', 50)->unique();
-            $table->string('password', 50);
+            $table->string('password', 255);
             $table->foreign('id_jenis_anggota')->references('id_jenis_anggota')->on('tbl_jenis_anggota');
             $table->timestamps();
         });
