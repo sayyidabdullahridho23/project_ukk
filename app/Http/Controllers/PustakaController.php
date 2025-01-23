@@ -15,6 +15,7 @@ class PustakaController extends Controller
     public function index()
     {
         $pustaka = Pustaka::with(['ddc', 'format', 'penerbit', 'pengarang'])->get();
+        // dd($pustaka);
         return view('admin.pustaka.index', compact('pustaka'));
     }
 

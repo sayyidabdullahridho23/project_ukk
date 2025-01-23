@@ -99,7 +99,7 @@ use Illuminate\Support\Facades\File;
                 @endphp
                 
                 @if($book->gambar && File::exists($storagePath))
-                    <img src="{{ asset('storage/pustaka/' . $book->gambar) }}" 
+                    <img src="{{ asset('pustaka/' . $book->gambar) }}" 
                          class="card-img-top" alt="{{ $book->judul_pustaka }}"
                          style="height: 200px; object-fit: cover;">
                 @else

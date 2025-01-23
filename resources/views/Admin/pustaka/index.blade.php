@@ -40,7 +40,7 @@
                         @foreach($pustaka as $buku)
                         <tr>
                             <td>
-                                @if($buku->gambar && file_exists(public_path('pustaka/' . basename($buku->gambar))))
+                                @if($buku->gambar)
                                     <img src="{{ asset('pustaka/' . basename($buku->gambar)) }}" 
                                          class="img-thumbnail" style="max-height: 200px;" alt="{{ $buku->judul_pustaka }}"><br>
                                 @else
