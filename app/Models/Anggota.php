@@ -31,4 +31,4 @@ class Anggota extends Model
     {
         return $this->belongsTo(JenisAnggota::class, 'id_jenis_anggota');
     }
-} 
+}

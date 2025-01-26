@@ -20,6 +20,8 @@ return new class extends Migration
             $table->date('tgl_pengembalian')->nullable();
             $table->enum('fp', ['0', '1']);
             $table->string('keterangan', 50)->nullable();
+            $table->enum('status_approval', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->text('reject_reason')->nullable();
             $table->foreign('id_pustaka')->references('id_pustaka')->on('tbl_pustaka');
             $table->foreign('id_anggota')->references('id_anggota')->on('tbl_anggota');
             $table->timestamps();

@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.appUser')
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-4">
             <div class="card">
-                @if($book->gambar && Storage::disk('public')->exists($book->gambar))
-                    <img src="{{ asset('storage/' . $book->gambar) }}" 
+                @if($book->gambar && file_exists(public_path('pustaka/' . $book->gambar)))
+                    <img src="{{ asset('pustaka/' . $book->gambar) }}" 
                          class="card-img-top" alt="{{ $book->judul_pustaka }}">
                 @else
                     <img src="{{ asset('images/no-image.png') }}" 
@@ -61,13 +61,25 @@
                         <div class="col-md-9">{{ $book->abstraksi }}</div>
                     </div>
                     @endif
+                    
+                    <div class="mt-4">
+                        @if($book->fp == '1')
+                            <a href="{{ route('transaksi.create', $book->id_pustaka) }}" 
+                               class="btn btn-primary">
+                                <i class="fas fa-book-reader mr-2"></i>Pinjam Buku
+                            </a>
+                        @else
+                            <button class="btn btn-secondary" disabled>
+                                <i class="fas fa-clock mr-2"></i>Sedang Dipinjam
+                            </button>
+                        @endif
+                        <a href="{{ route('home') }}" class="btn btn-secondary ml-2">
+                            <i class="fas fa-arrow-left mr-2"></i>Kembali
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="mt-3">
-        <a href="{{ route('home') }}" class="btn btn-secondary">Kembali</a>
     </div>
 </div>
 @endsection 

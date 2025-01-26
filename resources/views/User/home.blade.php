@@ -2,43 +2,31 @@
 use Illuminate\Support\Facades\File;
 @endphp
 
-@extends('layouts.app')
+@extends('layouts.appUser')
 
 @section('content')
 <div class="container">
     <!-- Hero Section -->
     <div class="row mb-4">
         <div class="col-12">
-            @auth
-                <div class="card">
-                    <div class="card-body py-5">
-                        <h2 class="display-5 text-primary mb-4">Cari Buku</h2>
-                        <form action="" method="GET">
-                            <div class="input-group input-group-lg">
-                                <input type="text" class="form-control" name="keyword" 
-                                    placeholder="Masukkan judul buku atau kata kunci..." 
-                                    aria-label="Search books">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search"></i> Cari
-                                </button>
-                            </div>
-                            <div class="text-muted mt-2">
-                                <small>Contoh: Novel, Sejarah, Teknologi, atau masukkan judul buku</small>
-                            </div>
-                        </form>
-                    </div>
+            <div class="card">
+                <div class="card-body py-5">
+                    <h2 class="display-5 text-primary mb-4">Cari Buku</h2>
+                    <form action="" method="GET">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control" name="keyword" 
+                                placeholder="Masukkan judul buku atau kata kunci..." 
+                                aria-label="Search books">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i> Cari
+                            </button>
+                        </div>
+                        <div class="text-muted mt-2">
+                            <small>Contoh: Novel, Sejarah, Teknologi, atau masukkan judul buku</small>
+                        </div>
+                    </form>
                 </div>
-            @else
-                <div class="card bg-primary text-white">
-                    <div class="card-body py-5">
-                        <h1 class="display-4">Selamat Datang di Perpustakaan Digital</h1>
-                        <p class="lead">Temukan ribuan koleksi buku untuk menambah wawasan dan pengetahuan Anda</p>
-                        <hr class="my-4">
-                        <p>Belum menjadi anggota? Daftar sekarang!</p>
-                        <a href="{{ route('anggota.create') }}" class="btn btn-light btn-lg">Daftar Anggota</a>
-                    </div>
-                </div>
-            @endauth
+            </div>
         </div>
     </div>
 
@@ -47,10 +35,10 @@ use Illuminate\Support\Facades\File;
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <i class="fas fa-user-plus fa-3x mb-3 text-primary"></i>
-                    <h5 class="card-title">Daftar Anggota</h5>
-                    <p class="card-text">Bergabung menjadi anggota perpustakaan</p>
-                    <a href="{{ route('anggota.create') }}" class="btn btn-primary">Daftar Sekarang</a>
+                    <i class="fas fa-user fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Profile Anggota</h5>
+                    <p class="card-text">Lihat informasi keanggotaan Anda</p>
+                    <a href="{{ route('anggota.profile') }}" class="btn btn-primary">Lihat Profile</a>
                 </div>
             </div>
         </div>
@@ -94,11 +82,7 @@ use Illuminate\Support\Facades\File;
         @forelse($latestBooks as $book)
         <div class="col-md-2">
             <div class="card h-100">
-                @php
-                    $storagePath = storage_path('app/public/pustaka/' . $book->gambar);
-                @endphp
-                
-                @if($book->gambar && File::exists($storagePath))
+                @if($book->gambar && file_exists(public_path('pustaka/' . $book->gambar)))
                     <img src="{{ asset('pustaka/' . $book->gambar) }}" 
                          class="card-img-top" alt="{{ $book->judul_pustaka }}"
                          style="height: 200px; object-fit: cover;">

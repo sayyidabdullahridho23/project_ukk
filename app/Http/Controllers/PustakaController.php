@@ -47,8 +47,9 @@ class PustakaController extends Controller
 
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
-            $gambarPath = $gambar->storeAs('pustaka', $gambar->hashName(), 'public');
-            $gambarPath = basename($gambarPath);
+            $gambarName = time() . '_' . $gambar->getClientOriginalName();
+            $gambar->move(public_path('pustaka'), $gambarName);
+            $gambarPath = $gambarName;
         }
 
         Pustaka::create([
@@ -107,15 +108,16 @@ class PustakaController extends Controller
 
         if ($request->hasFile('gambar')) {
             // Hapus gambar lama jika ada
-            if ($pustaka->gambar) {
-                Storage::disk('public')->delete($pustaka->gambar);
+            if ($pustaka->gambar && file_exists(public_path('pustaka/' . $pustaka->gambar))) {
+                unlink(public_path('pustaka/' . $pustaka->gambar));
             }
             
             // Upload gambar baru
             $gambar = $request->file('gambar');
-            $gambarPath = $gambar->store('pustaka', 'public');
+            $gambarName = time() . '_' . $gambar->getClientOriginalName();
+            $gambar->move(public_path('pustaka'), $gambarName);
             
-            $pustaka->gambar = $gambarPath;
+            $pustaka->gambar = $gambarName;
         }
 
         $pustaka->update([
@@ -146,8 +148,8 @@ class PustakaController extends Controller
         $pustaka = Pustaka::findOrFail($id);
         
         // Hapus file gambar jika ada
-        if ($pustaka->gambar) {
-            Storage::disk('public')->delete('pustaka/' . $pustaka->gambar);
+        if ($pustaka->gambar && file_exists(public_path('pustaka/' . $pustaka->gambar))) {
+            unlink(public_path('pustaka/' . $pustaka->gambar));
         }
         
         $pustaka->delete();

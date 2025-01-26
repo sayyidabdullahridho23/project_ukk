@@ -1,11 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row justify-content-center align-items-center min-vh-100 py-5">
+        <div class="col-md-6">
+            <div class="text-center mb-4">
+                <h1 class="text-white mb-3">{{ config('app.name', 'Laravel') }}</h1>
+                <p class="text-white-50">Create a new account</p>
+            </div>
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header text-center">{{ __('Register') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -66,6 +70,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+                            </div>
+                            <div>
+                                <a href="{{ route('login') }}">Already have an account? Login here</a>
                             </div>
                         </div>
                     </form>

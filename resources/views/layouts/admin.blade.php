@@ -106,6 +106,16 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.perpustakaan.*') ? 'active' : '' }}" 
+             href="{{ route('admin.perpustakaan.index')}}">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="fas fa-university text-info text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Profil Perpustakaan</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.pustaka.*') ? 'active' : '' }}" href="{{ route('admin.pustaka.index')}}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fas fa-book text-primary text-sm opacity-10"></i>
@@ -120,6 +130,15 @@
               <i class="fas fa-users text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Jenis Anggota</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.transaksi.*') ? 'active' : '' }}" href="{{ route('admin.transaksi.index')}}">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-exchange-alt text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Transaksi</span>
           </a>
         </li>
       </ul>

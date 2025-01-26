@@ -11,6 +11,8 @@ use App\Http\Controllers\PengarangController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\JenisAnggotaController;
 use App\Http\Controllers\PustakaController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\PerpustakaanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
@@ -32,8 +34,16 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
   
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/book/{id}', [HomeController::class, 'showBook'])->name('book.show');
-    Route::get('/daftar-anggota', [AnggotaController::class, 'create'])->name('anggota.create');
-    Route::post('/daftar-anggota', [AnggotaController::class, 'store'])->name('anggota.store');
+    
+    // Tambahkan route untuk anggota
+    Route::get('/anggota/register', [AnggotaController::class, 'create'])->name('anggota.create');
+    Route::post('/anggota/store', [AnggotaController::class, 'store'])->name('anggota.store');
+    Route::get('/anggota/profile', [AnggotaController::class, 'profile'])->name('anggota.profile');
+    Route::put('/anggota/update', [AnggotaController::class, 'update'])->name('anggota.update');
+    Route::put('/anggota/update-foto', [AnggotaController::class, 'updateFoto'])->name('anggota.updateFoto');
+
+    Route::get('/book/{id}/borrow', [TransaksiController::class, 'create'])->name('transaksi.create');
+    Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 });
   
 /*------------------------------------------
@@ -124,6 +134,22 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
         ]);
     });
 
+    Route::prefix('admin')->group(function () {
+        Route::resource('transaksi', TransaksiController::class)->names([
+            'index' => 'admin.transaksi.index',
+            'create' => 'admin.transaksi.create',
+            'store' => 'admin.transaksi.store',
+        ]);
+        Route::put('transaksi/{id}/pengembalian', [TransaksiController::class, 'pengembalian'])
+            ->name('admin.transaksi.pengembalian');
+        Route::put('admin/transaksi/{id}/approve', [TransaksiController::class, 'approve'])
+            ->name('admin.transaksi.approve');
+        Route::put('admin/transaksi/{id}/reject', [TransaksiController::class, 'reject'])
+            ->name('admin.transaksi.reject');
+    });
+
+    Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('admin.transaksi.index');
+
     // Admin Profile Routes
     Route::prefix('admin/profile')->group(function () {
         Route::get('/', [AdminController::class, 'profileAdmin'])->name('profile.edit');
@@ -131,7 +157,18 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::post('/', [ProfileController::class, 'store'])->name('admin.profile.store');
     });
+
+    Route::get('/admin/perpustakaan', [PerpustakaanController::class, 'index'])
+        ->name('admin.perpustakaan.index');
+    Route::post('/admin/perpustakaan', [PerpustakaanController::class, 'store'])
+        ->name('admin.perpustakaan.store');
+    Route::put('/admin/perpustakaan/{id}', [PerpustakaanController::class, 'update'])
+        ->name('admin.perpustakaan.update');
 });
+
+// Route untuk user
+Route::get('/perpustakaan', [PerpustakaanController::class, 'show'])
+    ->name('perpustakaan.show');
 
 // Buat route untuk membuat symbolic link jika belum ada
 Route::get('/linkstorage', function () {
