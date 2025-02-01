@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggota;
 use App\Models\JenisAnggota;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class AnggotaController extends Controller
 {
@@ -33,30 +35,38 @@ class AnggotaController extends Controller
             'alamat' => 'required|string|max:50',
             'no_telp' => 'required|string|max:15',
             'email' => 'required|email|max:30|unique:tbl_anggota,email',
-            'foto' => 'nullable|image|max:2048',
+            'foto' => 'nullable|image',
             'username' => 'required|string|max:50|unique:tbl_anggota,username',
             'password' => 'required|string|min:6',
         ]);
 
-        // Generate kode anggota (contoh: ANG-2024-001)
-        $tahun = date('Y');
-        $lastAnggota = Anggota::whereYear('created_at', $tahun)->latest()->first();
-        $sequence = $lastAnggota ? intval(substr($lastAnggota->kode_anggota, -3)) + 1 : 1;
-        $kodeAnggota = 'ANG-' . $tahun . '-' . str_pad($sequence, 3, '0', STR_PAD_LEFT);
-
-        // Handle upload foto
+        // Handle foto upload
         $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $fotoPath = $foto->hashName(); // Hanya mengambil nama file
-            $foto->storeAs('public/foto', $fotoPath); // Simpan di folder foto
+            $fotoName = time().'.'.$request->foto->getClientOriginalExtension();
+            $request->foto->move(public_path('avatars'), $fotoName);
+            $fotoPath = $fotoName;
         }
 
-        // Set tanggal daftar dan masa aktif
-        $tglDaftar = Carbon::now();
-        $masaAktif = $tglDaftar->copy()->addYear();
+        // Check if user exists, if not create new user
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            $user = User::create([
+                'name' => $request->nama_anggota,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'type' => 0,
+                'avatar' => $fotoPath
+            ]);
+        }
 
-        Anggota::create([
+        // Generate kode anggota
+        $lastAnggota = Anggota::latest()->first();
+        $kodeAnggota = 'ANG-' . date('Y') . '-' . sprintf('%03d', ($lastAnggota ? intval(substr($lastAnggota->kode_anggota, -3)) + 1 : 1));
+
+        // Create new anggota
+        $anggota = Anggota::create([
+            'id_user' => $user->id,
             'kode_anggota' => $kodeAnggota,
             'id_jenis_anggota' => $request->id_jenis_anggota,
             'nama_anggota' => $request->nama_anggota,
@@ -65,16 +75,16 @@ class AnggotaController extends Controller
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
             'email' => $request->email,
-            'tgl_daftar' => $tglDaftar,
-            'masa_aktif' => $masaAktif,
+            'tgl_daftar' => now(),
+            'masa_aktif' => now()->addYear(),
             'fa' => 'T',
             'foto' => $fotoPath,
             'username' => $request->username,
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('anggota.profile')
-            ->with('success', 'Pendaftaran anggota berhasil!');
+        return redirect()->route('login')
+            ->with('success', 'Pendaftaran berhasil! Silakan login.');
     }
 
     public function profile()
@@ -86,27 +96,25 @@ class AnggotaController extends Controller
     public function updateFoto(Request $request)
     {
         $request->validate([
-            'foto' => 'required|image|max:2048',
+            'foto' => 'required|image',
         ]);
 
         $anggota = Anggota::where('email', auth()->user()->email)->first();
 
-        if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
-            if ($anggota->foto && file_exists(public_path('foto/' . $anggota->foto))) {
-                unlink(public_path('foto/' . $anggota->foto));
-            }
-
-            // Upload foto baru
-            $foto = $request->file('foto');
-            $fotoPath = $foto->hashName();
-            $foto->storeAs('public/foto', $fotoPath);
-
-            // Update database
-            $anggota->update([
-                'foto' => $fotoPath
-            ]);
+        // Hapus foto lama jika ada
+        if ($anggota->foto && file_exists(public_path('avatars/'.$anggota->foto))) {
+            unlink(public_path('avatars/'.$anggota->foto));
         }
+
+        // Upload foto baru
+        $fotoName = time().'.'.$request->foto->getClientOriginalExtension();
+        $request->foto->move(public_path('avatars'), $fotoName);
+
+        // Update database
+        $anggota->update(['foto' => $fotoName]);
+        
+        // Update user avatar juga
+        $anggota->user->update(['avatar' => $fotoName]);
 
         return redirect()->route('anggota.profile')
             ->with('success', 'Foto profil berhasil diperbarui!');

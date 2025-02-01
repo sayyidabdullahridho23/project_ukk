@@ -43,35 +43,36 @@ class TransaksiController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'id_pustaka' => 'required|exists:tbl_pustaka,id_pustaka',
-            'id_anggota' => 'required|exists:tbl_anggota,id_anggota',
-            'keterangan' => 'nullable|string|max:50'
-        ]);
-
-        // Cek apakah anggota masih memiliki peminjaman aktif
-        $activeBorrows = Transaksi::where('id_anggota', $request->id_anggota)
-            ->whereNull('tgl_pengembalian')
-            ->where('status_approval', 'approved')
-            ->count();
-
-        if ($activeBorrows >= 3) {
-            return back()->with('error', 'Maaf, Anda telah mencapai batas maksimal peminjaman.');
-        }
-
-        // Buat transaksi baru dengan status pending
-        $transaksi = Transaksi::create([
+        // Debug data yang akan disimpan
+        \Log::info('Data transaksi yang akan disimpan:', [
             'id_pustaka' => $request->id_pustaka,
             'id_anggota' => $request->id_anggota,
-            'tgl_pinjam' => now(),
-            'tgl_kembali' => now()->addDays(7),
-            'fp' => '0',
-            'keterangan' => $request->keterangan,
-            'status_approval' => 'pending'
+            'tgl_pinjam' => $request->tgl_pinjam,
+            'tgl_kembali' => $request->tgl_kembali
         ]);
 
-        return redirect()->route('home')
-            ->with('success', 'Pengajuan peminjaman buku berhasil! Silakan menunggu persetujuan admin.');
+        try {
+            $transaksi = Transaksi::create([
+                'id_pustaka' => $request->id_pustaka,
+                'id_anggota' => $request->id_anggota,
+                'tgl_pinjam' => $request->tgl_pinjam,
+                'tgl_kembali' => $request->tgl_kembali,
+                'status_approval' => 'pending',
+                'fp' => '0'
+            ]);
+
+            // Debug transaksi yang tersimpan
+            \Log::info('Transaksi berhasil disimpan:', $transaksi->toArray());
+
+            // Update status buku menjadi dipinjam
+            $transaksi->pustaka->update(['fp' => '0']);
+
+            return redirect()->route('user.borrowing.history')
+                ->with('success', 'Permintaan peminjaman buku berhasil diajukan.');
+        } catch (\Exception $e) {
+            \Log::error('Error saat menyimpan transaksi: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat mengajukan peminjaman.');
+        }
     }
 
     public function pengembalian($id)
@@ -124,5 +125,33 @@ class TransaksiController extends Controller
         $transaksi->pustaka->update(['fp' => '1']);
 
         return back()->with('success', 'Peminjaman buku telah ditolak.');
+    }
+
+    public function userHistory()
+    {
+        $anggota = auth()->user()->anggota;
+        
+        if (!$anggota) {
+            return redirect()->route('anggota.create')
+                ->with('error', 'Anda harus mendaftar sebagai anggota terlebih dahulu.');
+        }
+
+        // Debug query SQL
+        \Log::info('Query SQL:', [
+            'sql' => Transaksi::where('id_anggota', $anggota->id_anggota)->toSql(),
+            'bindings' => ['id_anggota' => $anggota->id_anggota]
+        ]);
+
+        // Debug hasil query
+        $rawTransaksi = Transaksi::where('id_anggota', $anggota->id_anggota)->get();
+        \Log::info('Jumlah transaksi:', ['count' => $rawTransaksi->count()]);
+        \Log::info('Data transaksi:', $rawTransaksi->toArray());
+
+        $transactions = Transaksi::with(['pustaka', 'pustaka.pengarang'])
+            ->where('id_anggota', $anggota->id_anggota)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        
+        return view('user.borrowing-history', compact('transactions'));
     }
 } 

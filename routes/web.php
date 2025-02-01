@@ -44,6 +44,23 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     Route::get('/book/{id}/borrow', [TransaksiController::class, 'create'])->name('transaksi.create');
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+
+    Route::get('/books/search', [PustakaController::class, 'search'])->name('books.search');
+
+    // Catalog route
+    Route::get('/books/catalog', [PustakaController::class, 'catalog'])->name('books.catalog');
+    
+    // Borrowing history route
+    Route::get('/borrowing/history', [TransaksiController::class, 'userHistory'])->name('user.borrowing.history');
+    
+    // Favorites routes
+    Route::get('/favorites', [PustakaController::class, 'favorites'])->name('user.favorites');
+    Route::post('/favorites/{book}', [PustakaController::class, 'toggleFavorite'])->name('user.favorites.toggle');
+
+    // Route untuk peminjaman buku
+    Route::get('/transaksi/create/{id}', [TransaksiController::class, 'create'])->name('transaksi.create');
+    Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
+    Route::get('/transaksi/history', [TransaksiController::class, 'userHistory'])->name('user.borrowing.history');
 });
   
 /*------------------------------------------
@@ -175,4 +192,6 @@ Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
     return 'Storage link has been created';
 });
+
+
 

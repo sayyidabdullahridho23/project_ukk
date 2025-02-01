@@ -157,4 +157,55 @@ class PustakaController extends Controller
         return redirect()->route('admin.pustaka.index')
             ->with('success', 'Pustaka berhasil dihapus');
     }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        
+        $books = Pustaka::query()
+            ->where(function($query) use ($keyword) {
+                $query->where('judul_pustaka', 'LIKE', "%{$keyword}%")
+                      ->orWhere('keyword', 'LIKE', "%{$keyword}%")
+                      ->orWhereHas('pengarang', function($q) use ($keyword) {
+                          $q->where('nama_pengarang', 'LIKE', "%{$keyword}%");
+                      });
+            })
+            ->with(['pengarang'])
+            ->paginate(12);
+        
+        return view('user.search-results', compact('books', 'keyword'));
+    }
+
+    public function catalog()
+    {
+        $books = Pustaka::with(['pengarang', 'penerbit'])
+            ->orderBy('judul_pustaka')
+            ->paginate(12);
+        
+        return view('user.catalog', compact('books'));
+    }
+
+    public function favorites()
+    {
+        $favorites = auth()->user()->favorites()
+            ->with(['pengarang', 'penerbit'])
+            ->paginate(12);
+        
+        return view('user.favorites', compact('favorites'));
+    }
+
+    public function toggleFavorite(Pustaka $book)
+    {
+        $user = auth()->user();
+        
+        if ($user->favorites()->where('user_favorites.id_pustaka', $book->id_pustaka)->exists()) {
+            $user->favorites()->detach($book->id_pustaka);
+            $message = 'Buku dihapus dari favorit';
+        } else {
+            $user->favorites()->attach($book->id_pustaka);
+            $message = 'Buku ditambahkan ke favorit';
+        }
+        
+        return back()->with('success', $message);
+    }
 } 

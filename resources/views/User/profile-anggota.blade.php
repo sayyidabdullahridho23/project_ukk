@@ -1,4 +1,4 @@
-@extends('layouts.appUser')
+@extends('layouts.user')
 
 @section('content')
 <div class="container">
@@ -12,7 +12,7 @@
                     @if($anggota)
                         <div class="text-center mb-4">
                             @if($anggota->foto)
-                                <img src="{{ asset('foto/' . $anggota->foto) }}" 
+                                <img src="{{ asset('avatars/' . $anggota->foto) }}" 
                                      class="rounded-circle mb-3" 
                                      style="width: 150px; height: 150px; object-fit: cover;"
                                      alt="Foto Profile">

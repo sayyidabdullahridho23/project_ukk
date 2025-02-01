@@ -1,4 +1,4 @@
-@extends('layouts.appUser')
+@extends('layouts.user')
 
 @section('content')
 <div class="container">
@@ -63,19 +63,31 @@
                     @endif
                     
                     <div class="mt-4">
-                        @if($book->fp == '1')
-                            <a href="{{ route('transaksi.create', $book->id_pustaka) }}" 
-                               class="btn btn-primary">
-                                <i class="fas fa-book-reader mr-2"></i>Pinjam Buku
+                        <div class="d-flex gap-2">
+                            @if($book->fp == '1')
+                                <a href="{{ route('transaksi.create', $book->id_pustaka) }}" 
+                                   class="btn btn-primary">
+                                    <i class="fas fa-book-reader mr-2"></i>Pinjam Buku
+                                </a>
+                            @else
+                                <button class="btn btn-secondary" disabled>
+                                    <i class="fas fa-clock mr-2"></i>Sedang Dipinjam
+                                </button>
+                            @endif
+                            
+                            <!-- Tombol Favorite -->
+                            <form action="{{ route('user.favorites.toggle', $book->id_pustaka) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn {{ auth()->user()->favorites->contains($book->id_pustaka) ? 'btn-danger' : 'btn-outline-danger' }}">
+                                    <i class="fas fa-heart mr-2"></i>
+                                    {{ auth()->user()->favorites->contains($book->id_pustaka) ? 'Hapus dari Favorit' : 'Tambah ke Favorit' }}
+                                </button>
+                            </form>
+                            
+                            <a href="{{ route('home') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left mr-2"></i>Kembali
                             </a>
-                        @else
-                            <button class="btn btn-secondary" disabled>
-                                <i class="fas fa-clock mr-2"></i>Sedang Dipinjam
-                            </button>
-                        @endif
-                        <a href="{{ route('home') }}" class="btn btn-secondary ml-2">
-                            <i class="fas fa-arrow-left mr-2"></i>Kembali
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>

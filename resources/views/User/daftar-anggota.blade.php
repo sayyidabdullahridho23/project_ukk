@@ -1,4 +1,4 @@
-@extends('layouts.appUser')
+@extends('layouts.user')
 
 @section('content')
 <div class="container">
@@ -79,7 +79,7 @@
 
                         <div class="form-group mb-3">
                             <label for="foto">Foto</label>
-                            <input type="file" class="form-control" id="foto" name="foto">
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" onchange="validateFile(this)">
                             <small class="text-muted">Format: JPG, JPEG, PNG (Max: 2MB)</small>
                         </div>
 
@@ -126,4 +126,26 @@
         padding: 10px 20px;
     }
 </style>
-@endsection 
+@endsection
+
+@push('scripts')
+<script>
+function validateFile(input) {
+    const file = input.files[0];
+    if (file) {
+        if (file.size > 2 * 1024 * 1024) {
+            alert('Ukuran file terlalu besar. Maksimal 2MB');
+            input.value = '';
+            return;
+        }
+        
+        const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!validTypes.includes(file.type)) {
+            alert('Format file tidak valid. Gunakan JPG, JPEG, atau PNG');
+            input.value = '';
+            return;
+        }
+    }
+}
+</script>
+@endpush 

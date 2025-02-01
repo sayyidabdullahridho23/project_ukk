@@ -60,4 +60,22 @@ class User extends Authenticatable
             get: fn ($value) =>  ["user", "admin"][$value],
         );
     }
+
+    public function anggota()
+    {
+        return $this->hasOne(Anggota::class, 'id_user');
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Pustaka::class, 'user_favorites', 'user_id', 'id_pustaka')
+                    ->withTimestamps();
+    }
+
+    public function hasFavorite($bookId)
+    {
+        return $this->favorites()
+            ->where('user_favorites.id_pustaka', $bookId)
+            ->exists();
+    }
 }

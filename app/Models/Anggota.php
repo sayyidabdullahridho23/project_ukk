@@ -10,6 +10,7 @@ class Anggota extends Model
     protected $primaryKey = 'id_anggota';
     
     protected $fillable = [
+        'id_user',
         'id_jenis_anggota',
         'kode_anggota',
         'nama_anggota',
@@ -30,5 +31,15 @@ class Anggota extends Model
     public function jenisAnggota()
     {
         return $this->belongsTo(JenisAnggota::class, 'id_jenis_anggota');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'id_anggota', 'id_anggota');
     }
 }

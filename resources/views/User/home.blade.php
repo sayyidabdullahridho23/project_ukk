@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\File;
 @endphp
 
-@extends('layouts.appUser')
+@extends('layouts.user')
 
 @section('content')
 <div class="container">
@@ -12,10 +12,11 @@ use Illuminate\Support\Facades\File;
             <div class="card">
                 <div class="card-body py-5">
                     <h2 class="display-5 text-primary mb-4">Cari Buku</h2>
-                    <form action="" method="GET">
+                    <form action="{{ route('books.search') }}" method="GET">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control" name="keyword" 
                                 placeholder="Masukkan judul buku atau kata kunci..." 
+                                value="{{ request('keyword') }}"
                                 aria-label="Search books">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-search"></i> Cari
@@ -31,7 +32,7 @@ use Illuminate\Support\Facades\File;
     </div>
 
     <!-- Quick Links Section -->
-    <div class="row mb-4">
+    <div class="row mb-4 justify-content-center">
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
@@ -48,17 +49,7 @@ use Illuminate\Support\Facades\File;
                     <i class="fas fa-book fa-3x mb-3 text-primary"></i>
                     <h5 class="card-title">Katalog Buku</h5>
                     <p class="card-text">Jelajahi koleksi buku kami</p>
-                    <a href="#" class="btn btn-primary">Lihat Katalog</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-history fa-3x mb-3 text-primary"></i>
-                    <h5 class="card-title">Riwayat Peminjaman</h5>
-                    <p class="card-text">Lihat riwayat peminjaman Anda</p>
-                    <a href="#" class="btn btn-primary">Lihat Riwayat</a>
+                    <a href="{{ route('books.catalog') }}" class="btn btn-primary">Lihat Katalog</a>
                 </div>
             </div>
         </div>
@@ -68,7 +59,7 @@ use Illuminate\Support\Facades\File;
                     <i class="fas fa-bookmark fa-3x mb-3 text-primary"></i>
                     <h5 class="card-title">Buku Favorit</h5>
                     <p class="card-text">Koleksi buku favorit Anda</p>
-                    <a href="#" class="btn btn-primary">Lihat Favorit</a>
+                    <a href="{{ route('user.favorites') }}" class="btn btn-primary">Lihat Favorit</a>
                 </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tbl_anggota', function (Blueprint $table) {
             $table->id('id_anggota');
+            $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_jenis_anggota');
             $table->string('kode_anggota', 20)->unique();
             $table->string('nama_anggota', 50)->unique();
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->string('username', 50)->unique();
             $table->string('password', 255);
             $table->foreign('id_jenis_anggota')->references('id_jenis_anggota')->on('tbl_jenis_anggota');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();
         });
     }
