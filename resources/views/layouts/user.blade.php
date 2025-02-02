@@ -17,6 +17,166 @@
     
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <style>
+        body {
+            background-color: #121212 !important;
+            color: #ffffff;
+        }
+
+        .card {
+            background-color: #1E1E1E !important;
+            border: 1px solid #333333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background-color: #252525 !important;
+            border-bottom: 1px solid #333333;
+        }
+
+        .card-body {
+            color: #E0E0E0;
+        }
+
+        .text-muted {
+            color: #AAAAAA !important;
+        }
+
+        .form-control {
+            background-color: #2D2D2D !important;
+            border: 1px solid #404040;
+            color: #ffffff;
+        }
+
+        .form-control:focus {
+            background-color: #333333 !important;
+            border-color: #505050;
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background-color: #2D4263 !important;
+            border-color: #2D4263;
+        }
+
+        .btn-primary:hover {
+            background-color: #1E2B41 !important;
+            border-color: #1E2B41;
+        }
+
+        .btn-secondary {
+            background-color: #4A4A4A !important;
+            border-color: #4A4A4A;
+        }
+
+        .btn-secondary:hover {
+            background-color: #3D3D3D !important;
+            border-color: #3D3D3D;
+        }
+
+        .table {
+            color: #E0E0E0;
+        }
+
+        .alert {
+            background-color: #252525;
+            border-color: #333333;
+            color: #E0E0E0;
+        }
+
+        .alert-success {
+            background-color: #1B3323;
+            border-color: #265C33;
+        }
+
+        .alert-danger {
+            background-color: #331B1B;
+            border-color: #5C2626;
+        }
+
+        .alert-info {
+            background-color: #1B2633;
+            border-color: #26405C;
+        }
+
+        .nav-link {
+            color: #E0E0E0 !important;
+        }
+
+        .nav-link:hover {
+            color: #FFFFFF !important;
+            background-color: #2D2D2D;
+        }
+
+        .nav-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .pagination .page-link {
+            background-color: #2D2D2D;
+            border-color: #404040;
+            color: #E0E0E0;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #404040;
+            border-color: #505050;
+            color: #FFFFFF;
+        }
+
+        .pagination .active .page-link {
+            background-color: #2D4263;
+            border-color: #2D4263;
+        }
+
+        /* Profile section specific styles */
+        .profile-section {
+            background-color: #1E1E1E;
+            border: 1px solid #333333;
+        }
+
+        .profile-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-header {
+            border-bottom: 2px solid #333333;
+            color: #E0E0E0;
+        }
+
+        .current-avatar {
+            border: 3px solid #333333;
+        }
+
+        .current-avatar:hover {
+            border-color: #2D4263;
+        }
+
+        /* Modal styles */
+        .modal-content {
+            background-color: #1E1E1E;
+            border: 1px solid #333333;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #333333;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #333333;
+        }
+    </style>
 </head>
 
 <style>
@@ -76,18 +236,7 @@
     padding: 0 1rem;
 }
 
-.nav-profile {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
 
-.nav-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid white;
-}
 
 .btn-custom {
     background-color: #3b82f6;

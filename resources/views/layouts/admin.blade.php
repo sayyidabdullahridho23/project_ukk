@@ -20,6 +20,183 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ asset('css/argon-dashboard.css?v=2.1.0') }}" rel="stylesheet" />
+
+  <style>
+    /* Dark theme overrides */
+    body {
+        background-color: #121212 !important;
+        color: #ffffff;
+    }
+
+    .bg-gray-100 {
+        background-color: #1A1A1A !important;
+    }
+
+    .sidenav {
+        background-color: #1E1E1E !important;
+        border-color: #333333 !important;
+    }
+
+    .sidenav .navbar-brand {
+        color: #E0E0E0 !important;
+    }
+
+    .nav-link {
+        color: #E0E0E0 !important;
+    }
+
+    .nav-link:hover {
+        color: #FFFFFF !important;
+        background-color: #2D2D2D !important;
+    }
+
+    .nav-link.active {
+        background-color: #2D4263 !important;
+        color: #FFFFFF !important;
+    }
+
+    .card {
+        background-color: #1E1E1E !important;
+        border: 1px solid #333333 !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .card-header {
+        background-color: #252525 !important;
+        border-bottom: 1px solid #333333 !important;
+    }
+
+    .card-body {
+        color: #E0E0E0 !important;
+    }
+
+    .table {
+        color: #E0E0E0 !important;
+    }
+
+    .table td, .table th {
+        border-color: #333333 !important;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #2D2D2D !important;
+        color: #FFFFFF !important;
+    }
+
+    .form-control {
+        background-color: #2D2D2D !important;
+        border: 1px solid #404040 !important;
+        color: #ffffff !important;
+    }
+
+    .form-control:focus {
+        background-color: #333333 !important;
+        border-color: #505050 !important;
+        color: #ffffff !important;
+    }
+
+    .btn-primary {
+        background-color: #2D4263 !important;
+        border-color: #2D4263 !important;
+    }
+
+    .btn-primary:hover {
+        background-color: #1E2B41 !important;
+        border-color: #1E2B41 !important;
+    }
+
+    .btn-secondary {
+        background-color: #4A4A4A !important;
+        border-color: #4A4A4A !important;
+    }
+
+    .btn-secondary:hover {
+        background-color: #3D3D3D !important;
+        border-color: #3D3D3D !important;
+    }
+
+    .modal-content {
+        background-color: #1E1E1E !important;
+        border: 1px solid #333333 !important;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #333333 !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #333333 !important;
+    }
+
+    .text-dark {
+        color: #E0E0E0 !important;
+    }
+
+    .text-muted {
+        color: #AAAAAA !important;
+    }
+
+    .border-radius-lg {
+        border: 1px solid #333333 !important;
+    }
+
+    .alert {
+        background-color: #252525 !important;
+        border-color: #333333 !important;
+        color: #E0E0E0 !important;
+    }
+
+    .alert-success {
+        background-color: #1B3323 !important;
+        border-color: #265C33 !important;
+    }
+
+    .alert-danger {
+        background-color: #331B1B !important;
+        border-color: #5C2626 !important;
+    }
+
+    .alert-info {
+        background-color: #1B2633 !important;
+        border-color: #26405C !important;
+    }
+
+    /* Dashboard specific styles */
+    .icon-shape {
+        background: #2D2D2D !important;
+    }
+
+    .chart-canvas {
+        filter: invert(0.9) hue-rotate(180deg);
+    }
+
+    /* Fixed plugin customizer */
+    .fixed-plugin .card {
+        background-color: #1E1E1E !important;
+    }
+
+    .badge.filter {
+        border: 1px solid #333333 !important;
+    }
+
+    /* Pagination */
+    .pagination .page-link {
+        background-color: #2D2D2D !important;
+        border-color: #404040 !important;
+        color: #E0E0E0 !important;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #404040 !important;
+        border-color: #505050 !important;
+        color: #FFFFFF !important;
+    }
+
+    .pagination .active .page-link {
+        background-color: #2D4263 !important;
+        border-color: #2D4263 !important;
+    }
+  </style>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
