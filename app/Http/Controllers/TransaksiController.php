@@ -67,7 +67,7 @@ class TransaksiController extends Controller
             // Update status buku menjadi dipinjam
             $transaksi->pustaka->update(['fp' => '0']);
 
-            return redirect()->route('user.borrowing.history')
+            return redirect()->route('User.home')
                 ->with('success', 'Permintaan peminjaman buku berhasil diajukan.');
         } catch (\Exception $e) {
             \Log::error('Error saat menyimpan transaksi: ' . $e->getMessage());
