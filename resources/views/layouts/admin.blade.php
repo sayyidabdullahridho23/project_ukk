@@ -206,8 +206,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-        <img src="{{ asset('img/logo-ct-dark.png') }}" width="26px" height="26px" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Creative Tim</span>
+        <span class="ms-1 font-weight-bold">Perpustakaan</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -215,9 +214,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.home') ? 'active' : '' }}" href="{{ route('admin.home')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-            </div>
+            
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
@@ -229,27 +226,21 @@
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.rak.*') ? 'active' : '' }}" href="{{ route('admin.rak.index')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-archive text-warning text-sm opacity-10"></i>
-            </div>
+            
             <span class="nav-link-text ms-1">Rak</span>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.ddc.*') ? 'active' : '' }}" href="{{ route('admin.ddc.index')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-tags text-info text-sm opacity-10"></i>
-            </div>
+            
             <span class="nav-link-text ms-1">DDC</span>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.format.*') ? 'active' : '' }}" href="{{ route('admin.format.index')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-list-alt text-success text-sm opacity-10"></i>
-            </div>
+            
             <span class="nav-link-text ms-1">Format</span>
           </a>
         </li>
@@ -261,18 +252,14 @@
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.penerbit.*') ? 'active' : '' }}" href="{{ route('admin.penerbit.index')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-building text-primary text-sm opacity-10"></i>
-            </div>
+            
             <span class="nav-link-text ms-1">Penerbit</span>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.pengarang.*') ? 'active' : '' }}" href="{{ route('admin.pengarang.index')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-user-edit text-danger text-sm opacity-10"></i>
-            </div>
+            
             <span class="nav-link-text ms-1">Pengarang</span>
           </a>
         </li>
@@ -285,36 +272,28 @@
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.perpustakaan.*') ? 'active' : '' }}" 
              href="{{ route('admin.perpustakaan.index')}}">
-              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                  <i class="fas fa-university text-info text-sm opacity-10"></i>
-              </div>
+              
               <span class="nav-link-text ms-1">Profil Perpustakaan</span>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.pustaka.*') ? 'active' : '' }}" href="{{ route('admin.pustaka.index')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-book text-primary text-sm opacity-10"></i>
-            </div>
+      
             <span class="nav-link-text ms-1">Pustaka</span>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.jenis-anggota.*') ? 'active' : '' }}" href="{{ route('admin.jenis-anggota.index')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-users text-warning text-sm opacity-10"></i>
-            </div>
+            
             <span class="nav-link-text ms-1">Jenis Anggota</span>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.transaksi.*') ? 'active' : '' }}" href="{{ route('admin.transaksi.index')}}">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-exchange-alt text-success text-sm opacity-10"></i>
-            </div>
+
             <span class="nav-link-text ms-1">Transaksi</span>
           </a>
         </li>

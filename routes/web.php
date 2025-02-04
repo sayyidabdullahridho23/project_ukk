@@ -70,7 +70,7 @@ All Admin Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
   
-    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+    Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
 
     Route::prefix('admin')->group(function () {
         Route::resource('rak', RakController::class)->names([

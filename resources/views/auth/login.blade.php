@@ -6,7 +6,6 @@
         <div class="col-md-6">
             <div class="text-center mb-4">
                 <h1 class="text-white mb-3">Perpustakaan</h1>
-                <p class="text-white-50">Welcome back! Please login to your account.</p>
             </div>
             <div class="card">
                 <div class="card-header text-center">{{ __('Login') }}</div>
@@ -77,4 +76,27 @@
         </div>
     </div>
 </div>
+<!-- Background Video -->
+<video autoplay muted loop id="bg-video">
+    <source src="{{ asset('videos/fer.mp4') }}" type="video/mp4">
+    Your browser does not support HTML5 video.
+</video>
+
+
+<style>
+    #bg-video {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+    .container {
+        position: relative;
+        z-index: 1;
+    }
+</style>
+
 @endsection
