@@ -109,7 +109,7 @@
             <div class="container">
                 <a class="back-button" href="{{ route('admin.home') }}">
                     <box-icon name='chevron-left' color="white"></box-icon>
-                    <span>Back to Dashboard</span>
+                    <span>Kembali ke Dashboard</span>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">

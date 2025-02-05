@@ -33,9 +33,12 @@ class JenisAnggotaController extends Controller
             ->with('success', 'Jenis anggota berhasil ditambahkan.');
     }
 
-    public function edit(JenisAnggota $jenisAnggota)
+    public function edit($jenisAnggota)
     {
+        $jenisAnggota = JenisAnggota::find($jenisAnggota);
+        
         return view('admin.jenis-anggota.edit', compact('jenisAnggota'));
+
     }
 
     public function update(Request $request, JenisAnggota $jenisAnggota)
@@ -53,8 +56,13 @@ class JenisAnggotaController extends Controller
             ->with('success', 'Jenis anggota berhasil diperbarui.');
     }
 
-    public function destroy(JenisAnggota $jenisAnggota)
+    public function destroy( $jenisAnggota)
     {
+        $jenisAnggota = JenisAnggota::find($jenisAnggota);
+        if ($jenisAnggota->anggota()-> count()   > 0) {
+            return redirect()->back()
+            ->with('danger', 'Jenis anggota gagal dihapus.'); 
+        }
         $jenisAnggota->delete();
 
         return redirect()->route('admin.jenis-anggota.index')

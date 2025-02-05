@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\File;
         <div class="col-12">
             <div class="card">
                 <div class="card-body py-5">
-                    <h2 class="display-5 text-primary mb-4">Cari Buku</h2>
+                <h2 class="display-5 text-primary mb-4" style="font-family: 'Poppins', sans-serif; text-align: center;">Cari Buku</h2>
+                <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
                     <form action="{{ route('books.search') }}" method="GET">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control" name="keyword" 
@@ -68,7 +69,7 @@ use Illuminate\Support\Facades\File;
     <!-- Latest Books Section -->
     <div class="row mb-4">
         <div class="col-12">
-            <h2 class="mb-4">Buku Terbaru</h2>
+            <h2 class="mb-4">Buku </h2>
         </div>
         @forelse($latestBooks as $book)
         <div class="col-md-2">

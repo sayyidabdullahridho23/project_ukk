@@ -5,7 +5,7 @@
     <div class="row justify-content-center align-items-center min-vh-100 py-5">
         <div class="col-md-6">
             <div class="text-center mb-4">
-                <h1 class="text-white mb-3">Perpustakaan</h1>
+                <h1 class="text-white mb-2">Library</h1>
             </div>
             <div class="card">
                 <div class="card-header text-center">{{ __('Login') }}</div>

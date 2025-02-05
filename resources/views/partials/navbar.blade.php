@@ -25,6 +25,12 @@
                                 <span>Profil Perpustakaan</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('user.borrowing.history') }}">
+                                <i class="fas fa-history me-1"></i>
+                                History Peminjaman
+                            </a>
+                        </li>
                     </ul>
                     
                     <ul class="navbar-nav ms-auto">
@@ -44,8 +50,7 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-white nav-profile" href="#" role="button" data-bs-toggle="dropdown">
                                     @if(Auth::user()->avatar)
                                         <img class="nav-avatar" src="/avatars/{{ Auth::user()->avatar }}" alt="Profile">
-                                    @else
-                                        <img class="nav-avatar" src="{{ asset('/img/default_profile.png') }}" alt="Default Profile">
+                                    
                                     @endif
                                     <span>{{ Auth::user()->name }}</span>
                                 </a>

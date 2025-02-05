@@ -50,9 +50,6 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     // Catalog route
     Route::get('/books/catalog', [PustakaController::class, 'catalog'])->name('books.catalog');
     
-    // Borrowing history route
-    Route::get('/borrowing/history', [TransaksiController::class, 'userHistory'])->name('user.borrowing.history');
-    
     // Favorites routes
     Route::get('/favorites', [PustakaController::class, 'favorites'])->name('user.favorites');
     Route::post('/favorites/{book}', [PustakaController::class, 'toggleFavorite'])->name('user.favorites.toggle');
@@ -60,7 +57,8 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     // Route untuk peminjaman buku
     Route::get('/transaksi/create/{id}', [TransaksiController::class, 'create'])->name('transaksi.create');
     Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
-    Route::get('/transaksi/history', [TransaksiController::class, 'userHistory'])->name('user.borrowing.history');
+
+    Route::get('/borrowing-history', [TransaksiController::class, 'borrowingHistory'])->name('user.borrowing.history');
 });
   
 /*------------------------------------------
