@@ -18,7 +18,9 @@ class Transaksi extends Model
         'fp',
         'keterangan',
         'status_approval',
-        'reject_reason'
+        'reject_reason',
+        'denda_rusak',
+        'denda_hilang'
     ];
 
     protected $dates = [

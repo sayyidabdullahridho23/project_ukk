@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\File;
                 <div class="card-body">
                     <i class="fas fa-user fa-3x mb-3 text-primary"></i>
                     <h5 class="card-title">Profile Anggota</h5>
-                    <p class="card-text">Lihat informasi keanggotaan Anda</p>
+                    <p class="card-text"></p>
                     <a href="{{ route('anggota.profile') }}" class="btn btn-primary">Lihat Profile</a>
                 </div>
             </div>
@@ -49,7 +49,7 @@ use Illuminate\Support\Facades\File;
                 <div class="card-body">
                     <i class="fas fa-book fa-3x mb-3 text-primary"></i>
                     <h5 class="card-title">Katalog Buku</h5>
-                    <p class="card-text">Jelajahi koleksi buku kami</p>
+                    <p class="card-text"></p>
                     <a href="{{ route('books.catalog') }}" class="btn btn-primary">Lihat Katalog</a>
                 </div>
             </div>
@@ -59,7 +59,7 @@ use Illuminate\Support\Facades\File;
                 <div class="card-body">
                     <i class="fas fa-bookmark fa-3x mb-3 text-primary"></i>
                     <h5 class="card-title">Buku Favorit</h5>
-                    <p class="card-text">Koleksi buku favorit Anda</p>
+                    <p class="card-text"></p>
                     <a href="{{ route('user.favorites') }}" class="btn btn-primary">Lihat Favorit</a>
                 </div>
             </div>
@@ -108,9 +108,10 @@ use Illuminate\Support\Facades\File;
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Pengumuman</h5>
-                </div>
+            <div class="card-header bg-info text-white text-center">
+    <h5 class="mb-0">Pengumuman</h5>
+</div>
+
                 <div class="card-body">
                     <div class="alert alert-info mb-0">
                         <h5>Jam Operasional Perpustakaan</h5>

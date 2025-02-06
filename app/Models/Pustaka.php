@@ -28,7 +28,13 @@ class Pustaka extends Model
         'fp',
         'jml_pinjam',
         'denda_terlambat',
-        'denda_hilang'
+        'denda_hilang',
+        'denda_rusak'
+    ];
+
+    protected $attributes = [
+        'fp' => '1', // Set default value to '1' (Tersedia)
+        'jml_pinjam' => 0
     ];
 
     public function ddc()
@@ -50,4 +56,16 @@ class Pustaka extends Model
     {
         return $this->belongsTo(Pengarang::class, 'id_pengarang', 'id_pengarang');
     }
-} 
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaksi::class, 'id_pustaka', 'id_pustaka');
+    }
+
+    public function activeLoans()
+    {
+        return $this->transactions()
+            ->where('status_approval', 'approved')
+            ->where('status_pengembalian', '0');
+    }
+}

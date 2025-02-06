@@ -127,5 +127,7 @@ class TransaksiController extends Controller
         return view('user.borrowing-history', compact('transaksis'));
     }
 
+    
+
     // Other methods...
 }

@@ -69,10 +69,16 @@
                             <td>
                                 @php
                                     $denda = 0;
+                                    if ($t->kondisi_buku == 'Rusak') {
+                                        $denda = $t->denda_rusak; // Ambil denda rusak
+                                    }
+                                    if ($t->kondisi_buku == 'Hilang') {
+                                        $denda += $t->pustaka->denda_hilang; // Ambil denda hilang
+                                    }
                                     if(!$t->tgl_pengembalian) {
                                         $tglKembali = \Carbon\Carbon::parse($t->tgl_kembali);
                                         if($tglKembali->lt(\Carbon\Carbon::now())) {
-                                            $denda = $tglKembali->diffInDays(\Carbon\Carbon::now()) * $t->pustaka->denda_terlambat;
+                                            $denda += $tglKembali->diffInDays(\Carbon\Carbon::now()) * $t->pustaka->denda_terlambat;
                                         }
                                     }
                                 @endphp
@@ -95,12 +101,10 @@
                                         Tolak
                                     </button>
                                 @elseif($t->status_approval == 'approved' && !$t->tgl_pengembalian)
-                                    <form action="{{ route('admin.transaksi.pengembalian', $t->id_transaksi) }}" 
-                                          method="POST" class="d-inline">
+                                    <form action="{{ route('admin.transaksi.pengembalian', $t->id_transaksi) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-primary btn-sm"
-                                                onclick="return confirm('Konfirmasi pengembalian buku?')">
+                                        <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Konfirmasi pengembalian buku?')">
                                             Terima Kembali
                                         </button>
                                     </form>

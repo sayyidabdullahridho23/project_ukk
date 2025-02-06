@@ -80,7 +80,7 @@
                                 @csrf
                                 <button type="submit" class="btn {{ auth()->user()->favorites->contains($book->id_pustaka) ? 'btn-danger' : 'btn-outline-danger' }}">
                                     <i class="fas fa-heart mr-2"></i>
-                                    {{ auth()->user()->favorites->contains($book->id_pustaka) ? 'Hapus dari Favorit' : 'Tambah ke Favorit' }}
+                                    {{ auth()->user()->favorites->contains($book->id_pustaka) ? 'Hapus dari Favorit' : 'Favorit' }}
                                 </button>
                             </form>
                             

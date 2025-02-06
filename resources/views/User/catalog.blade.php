@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
 
-    <h2 class="mb-4">Katalog Buku</h2>
+    <h2 class="mb-4">Katalog</h2>
 
     <!-- Search Form -->
     <div class="row mb-4">
